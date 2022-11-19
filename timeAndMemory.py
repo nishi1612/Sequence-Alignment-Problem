@@ -1,5 +1,16 @@
+import sys 
+from resource import *
+import time
+import psutil
+import os
 import numpy as np
-import sys
+import matplotlib.pyplot as plt
+
+def process_memory():
+	process = psutil.Process()
+	memory_info = process.memory_info()
+	memory_consumed = int(memory_info.rss/1024)
+	return memory_consumed
 
 def generate_string(s, indicesList):
 	for i in indicesList:
@@ -117,35 +128,6 @@ def getEfficientAlignment(x, y):
 	return left[0] + right[0], left[1] + right[1], left[2] + right[2] 
 
 
-if (len(sys.argv) != 3): 
-	print("Invalid number of input arguments")
-	print("Input style: python3 efficient_3.py <input file> <output file>")
-
-try:
-	f = open(sys.argv[1], 'r')
-except: 
-	if FileNotFoundError: 
-		print("No input file exists!!")
-
-validCharacters = "ACGT"
-lines = f.readlines()
-inputStrings = []
-a = []
-b = []
-
-for line in lines:
-	if (line[-1] == '\n'):
-		line = line[:-1]
-	if (line[0] in validCharacters):
-		inputStrings.append(line)
-	else:
-		if (len(inputStrings) > 2 or len(inputStrings) < 1):
-			print("Invalid input file")
-		elif (len(inputStrings) == 1): 
-			a.append(int(line))
-		else:
-			b.append(int(line))
-
 ## Constraints
 delta = 30
 alpha = np.array([[0, 110, 48, 94], 
@@ -153,16 +135,95 @@ alpha = np.array([[0, 110, 48, 94],
 				  [48, 118, 0, 110],
 				  [94, 48, 110, 0]])
 
-## Generating strings
-x = generate_string(inputStrings[0], a)
-y = generate_string(inputStrings[1], b)
+lis1 = []
+lis2 = []
+for filename in os.listdir("./datapoints"):
+	
+	print("Printing filename: " + filename)
+	name = os.path.join("./datapoints/", filename)
+	f = open(name, 'r')
 
-## Main Driver
-ans = getEfficientAlignment(x, y)
+	validCharacters = "ACGT"
+	lines = f.readlines()
+	inputStrings = []
+	a = []
+	b = []
 
-## opening output file
-f = open(sys.argv[2], 'w')
-f.write(str(ans[0]) + '\n')
-f.write(str(ans[1]) + '\n')
-f.write(str(ans[2]))
-f.close()
+	for line in lines:
+		if (line[-1] == '\n'):
+			line = line[:-1]
+		if (line[0] in validCharacters):
+			inputStrings.append(line)
+		else:
+			if (len(inputStrings) > 2 or len(inputStrings) < 1):
+				print("Invalid input file")
+			elif (len(inputStrings) == 1): 
+				a.append(int(line))
+			else:
+				b.append(int(line))
+        
+	x = generate_string(inputStrings[0], a)
+	y = generate_string(inputStrings[1], b)
+
+	## Main Driver
+	start_time = time.time()
+	before_memory = process_memory()
+	getEfficientAlignment(x, y)
+	after_memory = process_memory()
+	end_time = time.time()
+	time_taken_efficient = (end_time - start_time)*1000
+	memory_taken_efficient = after_memory - before_memory	
+
+	start_time = time.time()
+	before_memory = process_memory()
+	getSequenceAlignment(x, y)
+	after_memory = process_memory()
+	end_time = time.time()
+	time_taken_basic = (end_time - start_time)*1000
+	memory_taken_basic = after_memory - before_memory	
+
+	lis1.append([len(x) + len(y), time_taken_efficient, time_taken_basic])
+	lis2.append([len(x) + len(y), memory_taken_efficient, memory_taken_basic])
+    
+lis1 = sorted(lis1, key=lambda x: x[0])
+lis2 = sorted(lis2, key=lambda x: x[0])
+efficient_time = []
+basic_time = []
+efficient_memory = []
+basic_memory = []
+lengths = []
+
+for i in lis1: 
+	lengths.append(i[0])
+	basic_time.append(i[2])
+	efficient_time.append(i[1])
+
+for i in lis2: 
+	basic_memory.append(i[2])
+	efficient_memory.append(i[1])
+
+print(lengths)
+print(basic_time)
+print(basic_memory)
+print(efficient_time)
+print(efficient_memory)
+
+fig1 = plt.figure()
+plt.plot(lengths, efficient_time)
+plt.plot(lengths, basic_time)
+plt.legend(['Efficient algorithm time consumed', 'Basic algorithm time consumed'])
+plt.xlabel('Total length of string (m+n)')
+plt.ylabel('Time consumed')
+plt.title('Input Size vs Time Consumed')
+plt.grid()
+plt.show()
+
+fig2 = plt.figure()
+plt.plot(lengths, efficient_memory)
+plt.plot(lengths, basic_memory)
+plt.legend(['Efficient algorithm memory usage', 'Basic algorithm memory usage'])
+plt.xlabel('Total length of string (m+n)')
+plt.ylabel('Memory usage')
+plt.title('Input Size vs Memory Consumed')
+plt.grid()
+plt.show()
