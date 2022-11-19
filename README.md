@@ -5,5 +5,5 @@
 3. Take input from the sample test-cases files and cat to output.txt
 4. Wrote shell script as a wrapper that internally complies and runs the python files
 ## Todo
-3. Implement memory and time analysis matrix
-4. Summary
+1. Implement memory and time analysis matrix
+2. Summary
