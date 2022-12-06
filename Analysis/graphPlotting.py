@@ -9,7 +9,7 @@ def readFile(f):
     for line in lines:
 
         # taking only first 15 output
-        if (k > 16):
+        if (k >= 15):
             break
 
         if (line[-1] == '\n'):
