@@ -1,5 +1,13 @@
 import numpy as np
 import sys
+import psutil
+import time
+
+def process_memory():
+	process = psutil.Process()
+	memory_info = process.memory_info()
+	memory_consumed = int(memory_info.rss/1024)
+	return memory_consumed
 
 def generate_string(s, indicesList):
 	for i in indicesList:
@@ -158,11 +166,17 @@ x = generate_string(inputStrings[0], a)
 y = generate_string(inputStrings[1], b)
 
 ## Main Driver
+start_time = time.time()
 ans = getEfficientAlignment(x, y)
+memory_taken_basic = process_memory()
+end_time = time.time()
+time_taken_basic = (end_time - start_time)*1000
 
 ## opening output file
 f = open(sys.argv[2], 'w')
-f.write(str(ans[0]) + '\n')
+f.write(str(int(ans[0])) + '\n')
 f.write(str(ans[1]) + '\n')
-f.write(str(ans[2]))
+f.write(str(ans[2]) + '\n')
+f.write(str(time_taken_basic) + '\n')
+f.write(str(memory_taken_basic))
 f.close()
