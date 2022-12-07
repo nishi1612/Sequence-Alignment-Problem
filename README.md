@@ -1,8 +1,9 @@
 # Sequence-Alignment-Problem
-## Complete Subtasks
-1. Basic DP algorithm implementation
-2. D&C + DP  based memory optimized algorithm implementation
-3. Take input from the sample test-cases files and cat to output.txt
-4. Wrote shell script as a wrapper that internally complies and runs the python files
-5. Created extra inputs and stored time and memory result in txt for the plotting
-6. Summary Document
+
+This repository contains files for Sequence Alignment Project for CSCI570 - Analysis of Algorithms.
+
+Steps to run:
+1. Run basic.sh to get results from dynamic programming version of Sequence Alignment problem.
+2. Run efficient.sh to get results from divide-and-conquer version combined with dynamic programming version.
+
+Analysis/ folder consists of files needed to run memory and time analysis of the algorithms.
