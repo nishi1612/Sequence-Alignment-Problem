@@ -8,14 +8,10 @@ def readFile(f):
     lines = f.readlines()
     for line in lines:
 
-        # taking only first 15 output
-        if (k >= 15):
-            break
-
         if (line[-1] == '\n'):
             line = line[:-1]
 
-        words = line.split(' ')
+        words = line.split(',')
         len.append(int(words[0]))
         memory.append(float(words[2]))
         time.append(float(words[1]))
@@ -34,7 +30,7 @@ plt.plot(len, efficientTime)
 plt.plot(len, basicTime)
 plt.legend(['Efficient algorithm time consumed', 'Basic algorithm time consumed'])
 plt.xlabel('Total length of string (m+n)')
-plt.ylabel('Time consumed')
+plt.ylabel('Time consumed (ms)')
 plt.title('Input Size vs Time Consumed')
 plt.grid()
 plt.savefig('timeComparision.png')
@@ -44,7 +40,7 @@ plt.plot(len, efficientMemory)
 plt.plot(len, basicMemory)
 plt.legend(['Efficient algorithm memory usage', 'Basic algorithm memory usage'])
 plt.xlabel('Total length of string (m+n)')
-plt.ylabel('Memory usage')
+plt.ylabel('Memory usage (KB)')
 plt.title('Input Size vs Memory Consumed')
 plt.grid()
 plt.savefig('memmoryComparision.png')

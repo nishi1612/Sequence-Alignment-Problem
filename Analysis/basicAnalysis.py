@@ -34,6 +34,6 @@ end_time = time.time()
 time_taken_basic = (end_time - start_time)*1000
     
 file1 = open("basic_output.txt", "a")  
-file1.write(str(len(x) + len(y)) + ' ' + str(time_taken_basic) + ' ' +  str(memory_taken_basic) + '\n')
+file1.write(str(len(x) + len(y)) + ',' + str(time_taken_basic) + ',' +  str(memory_taken_basic) + '\n')
 file1.close()
 print("Completed output for basic: " + sys.argv[1])

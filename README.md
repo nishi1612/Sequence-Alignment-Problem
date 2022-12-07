@@ -5,5 +5,4 @@
 3. Take input from the sample test-cases files and cat to output.txt
 4. Wrote shell script as a wrapper that internally complies and runs the python files
 5. Created extra inputs and stored time and memory result in txt for the plotting
-## Todo
-1. Summary
+6. Summary Document

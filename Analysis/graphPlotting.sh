@@ -1,50 +1,8 @@
 #!/bin/sh
-python3 basicAnalysis.py datapoints/in1.txt 
-python3 basicAnalysis.py datapoints/in2.txt
-python3 basicAnalysis.py datapoints/in3.txt
-python3 basicAnalysis.py datapoints/in4.txt 
-python3 basicAnalysis.py datapoints/in5.txt 
-python3 basicAnalysis.py datapoints/in6.txt 
-python3 basicAnalysis.py datapoints/in7.txt 
-python3 basicAnalysis.py datapoints/in8.txt 
-python3 basicAnalysis.py datapoints/in9.txt 
-python3 basicAnalysis.py datapoints/in10.txt 
-python3 basicAnalysis.py datapoints/in11.txt 
-python3 basicAnalysis.py datapoints/in12.txt 
-python3 basicAnalysis.py datapoints/in13.txt 
-python3 basicAnalysis.py datapoints/in14.txt 
-python3 basicAnalysis.py datapoints/in15.txt 
-python3 basicAnalysis.py newDatapoints/in16.txt 
-python3 basicAnalysis.py newDatapoints/in17.txt
-python3 basicAnalysis.py newDatapoints/in18.txt
-python3 basicAnalysis.py newDatapoints/in19.txt 
-python3 basicAnalysis.py newDatapoints/in20.txt 
-python3 basicAnalysis.py newDatapoints/in21.txt 
-python3 basicAnalysis.py newDatapoints/in22.txt 
-python3 basicAnalysis.py newDatapoints/in23.txt 
-python3 basicAnalysis.py newDatapoints/in24.txt 
 
-python3 efficientAnalysis.py datapoints/in1.txt 
-python3 efficientAnalysis.py datapoints/in2.txt
-python3 efficientAnalysis.py datapoints/in3.txt
-python3 efficientAnalysis.py datapoints/in4.txt 
-python3 efficientAnalysis.py datapoints/in5.txt 
-python3 efficientAnalysis.py datapoints/in6.txt 
-python3 efficientAnalysis.py datapoints/in7.txt 
-python3 efficientAnalysis.py datapoints/in8.txt 
-python3 efficientAnalysis.py datapoints/in9.txt 
-python3 efficientAnalysis.py datapoints/in10.txt 
-python3 efficientAnalysis.py datapoints/in11.txt 
-python3 efficientAnalysis.py datapoints/in12.txt 
-python3 efficientAnalysis.py datapoints/in13.txt 
-python3 efficientAnalysis.py datapoints/in14.txt 
-python3 efficientAnalysis.py datapoints/in15.txt 
-python3 efficientAnalysis.py newDatapoints/in16.txt 
-python3 efficientAnalysis.py newDatapoints/in17.txt
-python3 efficientAnalysis.py newDatapoints/in18.txt
-python3 efficientAnalysis.py newDatapoints/in19.txt 
-python3 efficientAnalysis.py newDatapoints/in20.txt 
-python3 efficientAnalysis.py newDatapoints/in21.txt 
-python3 efficientAnalysis.py newDatapoints/in22.txt 
-python3 efficientAnalysis.py newDatapoints/in23.txt 
-python3 efficientAnalysis.py newDatapoints/in24.txt 
+for FILE in `ls datapoints/| sort -V`; do 
+    python3 basicAnalysis.py datapoints/$(basename ${FILE});
+    python3 efficientAnalysis.py datapoints/$(basename ${FILE});
+done
+
+python3 graphPlotting.py
